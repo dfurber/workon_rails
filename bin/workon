@@ -1,0 +1,86 @@
+#!/usr/bin/env ruby_noexec_wrapper
+
+require 'yaml'
+
+def write_config(file, config)
+  File.open(file, 'w+') do |file|
+    file.write config.to_yaml
+  end
+end
+
+def run_command(cmd, config={})
+  config.each do |key, value|
+    ENV["WORKON_#{key.upcase}"] = value
+  end
+  path = File.dirname __FILE__
+  cmd = File.join path, cmd
+  puts "Executing #{cmd}"
+  system cmd
+end
+
+def start_working(config)
+  run_command 'work.sh', config
+end
+
+dot_file_name = '.workon'
+if File.exists?(dot_file_name) 
+  config = YAML::load File.open(dot_file_name).read
+else
+  config = { 'editor' => 'mine' }
+  config['domain'] = "#{`pwd`.strip.split('/').last}.test"
+  write_config(dot_file_name, config)
+end
+
+
+command = ARGV.shift
+
+if command
+  case command
+  when 'help'
+    puts "Workon Command Help"
+    puts "workon        : Starts your project for editing.\n"
+    puts "workon start  : Also starts your project.\n"
+    puts "workon set editor=mine : sets your editor to RubyMine. Any valid editor command will do.\n"
+    puts "workon set domain=mysite.test : tells workon what page to open in the browser to start your project\n"
+    puts "workon set tracker_id=TRACKER_ID\n"
+    puts "workon set github=GITHUB_REPO : i.e. singlebrook/project\n"
+    puts "workon set ac_url=support.gorges.us : set only if you use ActiveCollab\n"
+    puts "workon set ac=my-project-name : tells workon the project URL part on ActiveCollab\n"
+    puts "workon config : show config vars\n"
+    puts "workon set browser='Firefox'\n" # Doesn't have any effect yet.
+    puts "workon set move_windows=yes : tells workon to move the project windows. Depends on SizeUp\n"
+  when 'set'
+    settable = ARGV.shift
+    if settable
+      key, value = settable.split('=')
+      unless key and value
+        puts "Both config var and value need to be specified.\n"
+        Kernel.exit
+      end
+      unless %w{editor domain ac ac_url browser move_windows tracker_id github_repo}.include?(key)
+        puts "Invalid config var."
+        Kernel.exit
+      end
+      config.merge! key => value
+      write_config(dot_file_name, config)
+    else
+      puts "You need to specify which config var to set."
+      Kernel.exit
+    end
+  when 'config'
+    config.each do |key,value|
+      line = key.dup
+      0.upto(20-key.length) { line << ' ' }
+      line << ": #{value}\n"
+      puts line
+    end
+  when 'start'
+    start_working(config)
+  when 'fix'
+    ENV['CMD_PATH'] = path = File.dirname __FILE__
+    ENV['APP_NAME'] = `basename $PWD`
+    run_command 'fix_windows.sh'
+  end
+else
+  start_working(config)
+end
