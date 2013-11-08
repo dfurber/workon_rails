@@ -6,9 +6,7 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-	group :development do
-    	gem 'workon'
-	end
+   	gem 'workon_rails', group: :development
 	
 And then execute:
 
@@ -16,7 +14,8 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install workon
+    $ gem install workon_rails
+
 
 The first time you run workon from your project root, it creates a .workon file with default configuration.
 
