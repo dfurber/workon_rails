@@ -1,6 +1,6 @@
 # Workon
 
-TODO: Write a gem description
+Wouldn't it be nice if you could just cd into your project directory and type "workon" in order to get your work on? I'd rather do that than type "r s", open a new terminal tab, type "bundle exec guard", then go to my browser and open the home page, find the project on my issue tracker, etc. That's what this project does.
 
 ## Installation
 
@@ -67,3 +67,13 @@ OPTIONAL: Tell Workon to move the project windows. Depends on SizeUp.
 I don't actually use the SizeUp window positioning. It would be nice if somebody made that work and added the ability to configure where your windows open using the config vars.
 
 Also the default browser is Google Chrome. That's good enough for me. If you want it to use Firefox, I'm open to a pull request.
+
+## CREDITS
+
+I didn't actually start this project. Leon Miller-Out of Singlebrook did. My starting point, his code, can be found here:
+
+https://gist.github.com/sbleon/3439856
+
+I simply took those shell scripts and fronted them with a Ruby script that sets configuration options and environment variables before triggering Leon's scripts. I also added some of my own stuff and made the scripts friendly to the new environment variables.
+
+Thanks Leon!
