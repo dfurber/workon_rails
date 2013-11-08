@@ -1,3 +1,3 @@
-module Workon
-  VERSION = "0.0.1"
+module WorkonRails
+  VERSION = "0.0.2"
 end

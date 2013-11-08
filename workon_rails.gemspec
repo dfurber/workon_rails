@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["furberd@gmail.com"]
   spec.description   = %q{Opens project in RubyMine, starts guard, starts Rails server.}
   spec.summary       = %q{Go to your project folder and type workon.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/dfurber/workon_rails"
   spec.license       = "MIT"
   spec.executables = ["workon", "fix_windows.sh", "term", "work.sh"]
 
