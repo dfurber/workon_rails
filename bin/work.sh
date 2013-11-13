@@ -110,7 +110,7 @@ if [ "$WORKON_MOVE_WINDOWS" == "yes" ]; then
 fi
 
 # Open AC page for project
-if [[ "$WORKON_AC_URL" != "" && "$WORKON_AC" !="" ]]; then
+if [[ "$WORKON_AC_URL" != "" && "$WORKON_AC" != "" ]]; then
 	echo "Opening ActiveCollab project"
 	$BROWSER_CMD https://$WORKON_AC_URL/projects/$WORKON_AC/tasks
 fi
